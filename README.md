@@ -6,7 +6,7 @@
 
 ## About the plugin
 
-This serverless plugins wraps the configuration for CloudWatch alarms to monitor the messages in an SQS queue. You need to provide the SQS queue name and SNS topic which will receive the `Alarm` and `OK` messages. 
+This serverless plugin is a wrapper to configure CloudWatch Alarms to monitor the visible messages in an SQS queue. You need to provide the SQS *queue name* and SNS *topic* which will receive the `Alarm` and `OK` messages. 
 
 ## Usage
 
@@ -39,11 +39,45 @@ custom:
         - 50
         - 100
         - 500
-        - 1111
-        - 2222
 ```
 
-That's it!
+That's it! With this example your SNS topic will receive a message when there are more than 1, 50, 100, and 500 visible in SQS.
+
+## CloudWatch Alarms
+
+The created CloudWatch Alarms look like this:
+
+```json
+{
+  Type: 'AWS::CloudWatch::Alarm',
+  Properties: {
+    AlarmDescription: 'Alarm if queue contains more than 100 messages',
+    Namespace: 'AWS/SQS',
+    MetricName: 'ApproximateNumberOfMessagesVisible',
+    Dimensions: [
+      {
+        Name: 'QueueName',
+        Value: 'your-sqs-queue-name'
+      }
+    ],
+    Statistic: 'Sum',
+    Period: 60,
+    EvaluationPeriods: 1,
+    Threshold: 100,
+    ComparisonOperator: 'GreaterThanOrEqualToThreshold',
+    AlarmActions: [
+      { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':your-sns-topic-name' ] ] }
+    ],
+    OKActions: [
+      { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':your-sns-topic-name' ] ] }
+    ]
+  }
+}
+```
+
+## License
+
+Feel free to use the code, it's released using the [MIT license](https://github.com/sbstjn/serverless-sqs-alarms-plugin/blob/master/LICENSE.md).
 
 ## Contribution
 
