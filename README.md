@@ -66,10 +66,10 @@ The created CloudWatch Alarms look like this:
     "Threshold": 100,
     "ComparisonOperator": "GreaterThanOrEqualToThreshold",
     "AlarmActions": [
-      { "Fn::Join": [ "", [ "arn:aws:sns:" + this.region + ":", { "Ref": "AWS::AccountId" }, ":your-sns-topic-name" ] ] }
+      { "Fn::Join": [ "", [ "arn:aws:sns:eu-west-1:", { "Ref": "AWS::AccountId" }, ":your-sns-topic-name" ] ] }
     ],
     "OKActions": [
-      { "Fn::Join": [ "", [ "arn:aws:sns:" + this.region + ":", { "Ref": "AWS::AccountId" }, ":your-sns-topic-name" ] ] }
+      { "Fn::Join": [ "", [ "arn:aws:sns:eu-west-1:", { "Ref": "AWS::AccountId" }, ":your-sns-topic-name" ] ] }
     ]
   }
 }
