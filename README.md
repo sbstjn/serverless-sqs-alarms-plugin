@@ -1,6 +1,7 @@
 # ⚡️ Serverless Plugin for SQS CloudWatch Alarms
 
 [![npm](https://img.shields.io/npm/v/serverless-sqs-alarms-plugin.svg)](https://www.npmjs.com/package/serverless-sqs-alarms-plugin)
+[![CircleCI](https://img.shields.io/circleci/project/github/sbstjn/serverless-sqs-alarms-plugin.svg)](https://circleci.com/gh/sbstjn/serverless-sqs-alarms-plugin)
 [![license](https://img.shields.io/github/license/sbstjn/serverless-sqs-alarms-plugin.svg)](https://github.com/sbstjn/serverless-sqs-alarms-plugin/blob/master/LICENSE.md)
 [![Coveralls](https://img.shields.io/coveralls/sbstjn/serverless-sqs-alarms-plugin.svg)](https://coveralls.io/github/sbstjn/serverless-sqs-alarms-plugin)
 
