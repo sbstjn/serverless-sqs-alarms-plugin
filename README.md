@@ -49,27 +49,27 @@ The created CloudWatch Alarms look like this:
 
 ```json
 {
-  Type: 'AWS::CloudWatch::Alarm',
-  Properties: {
-    AlarmDescription: 'Alarm if queue contains more than 100 messages',
-    Namespace: 'AWS/SQS',
-    MetricName: 'ApproximateNumberOfMessagesVisible',
-    Dimensions: [
+  "Type": "AWS::CloudWatch::Alarm",
+  "Properties": {
+    "AlarmDescription": "Alarm if queue contains more than 100 messages",
+    "Namespace": "AWS/SQS",
+    "MetricName": "ApproximateNumberOfMessagesVisible",
+    "Dimensions": [
       {
-        Name: 'QueueName',
-        Value: 'your-sqs-queue-name'
+        "Name": "QueueName",
+        "Value": "your-sqs-queue-name"
       }
     ],
-    Statistic: 'Sum',
-    Period: 60,
-    EvaluationPeriods: 1,
-    Threshold: 100,
-    ComparisonOperator: 'GreaterThanOrEqualToThreshold',
-    AlarmActions: [
-      { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':your-sns-topic-name' ] ] }
+    "Statistic": "Sum",
+    "Period": 60,
+    "EvaluationPeriods": 1,
+    "Threshold": 100,
+    "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+    "AlarmActions": [
+      { "Fn::Join": [ "", [ "arn:aws:sns:" + this.region + ":", { "Ref": "AWS::AccountId" }, ":your-sns-topic-name" ] ] }
     ],
-    OKActions: [
-      { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':your-sns-topic-name' ] ] }
+    "OKActions": [
+      { "Fn::Join": [ "", [ "arn:aws:sns:" + this.region + ":", { "Ref": "AWS::AccountId" }, ":your-sns-topic-name" ] ] }
     ]
   }
 }
