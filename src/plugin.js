@@ -53,6 +53,10 @@ class Plugin {
   }
 
   beforeDeployResources () {
+    if (!this.serverless.service.custom || !this.serverless.service.custom['sqs-alarms']) {
+      return
+    }
+
     const alarms = this.serverless.service.custom['sqs-alarms'].map(
       data => new Alarm(data, this.serverless.service.provider.region)
     )
