@@ -2,7 +2,7 @@
   "name": "serverless-sqs-alarms-plugin",
   "description": "Serverless plugin to to configure CloudWatch alarms for SQS queues",
   "main": "src/index.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Sebastian Müller <mail@sbstjn.com>",
   "license": "MIT",
   "scripts": {
