@@ -1,0 +1,13 @@
+machine:
+  node:
+    version: 4.5.0
+  
+dependencies:
+  override:
+    - yarn
+
+test:
+  override:
+    - yarn test:cover
+  post:
+    - yarn coveralls
