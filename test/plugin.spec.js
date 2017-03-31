@@ -1,3 +1,5 @@
+'use strict'
+
 const Plugin = require('../')
 
 it('creates CloudFormation configuration', () => {
