@@ -11,10 +11,16 @@ class Alarm {
     this.thresholds = alarm.thresholds
   }
 
+  formatAlarmName(value) {
+    // Cloud Watch alarms must be alphanumeric only
+    let queue = this.queue.replace(/[^0-9a-z]/gi, '')
+    return util.format(queue + 'MessageAlarm%s', value)
+  }
+
   ressources () {
     return this.thresholds.map(
       value => ({
-        [util.format('MessageAlarm%s', value)]: {
+        [this.formatAlarmName(value)]: {
           Type: 'AWS::CloudWatch::Alarm',
           Properties: {
             AlarmDescription: util.format('Alarm if queue contains more than %s messages', value),
