@@ -60,7 +60,6 @@ describe('alarm name', () => {
 
   describe('is given', () => {
     it('adds alarm name to CloudFormation configuration', () => {
-
       config.service.custom['sqs-alarms'][0].alarmName = 'alarm'
 
       const test = new Plugin(config);
@@ -68,7 +67,7 @@ describe('alarm name', () => {
 
       const data = config.service.provider.compiledCloudFormationTemplate.Resources
 
-      expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.AlarmName', 'test-queue-alarm-3')
+      expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.AlarmName', 'alarm-test-queue-3')
     })
   })
 

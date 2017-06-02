@@ -50,7 +50,7 @@ class Alarm {
         }
 
         if (this.alarmName) {
-          config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.queue, this.alarmName, value)
+          config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.alarmName, this.queue, value)
         }
         return config
       }
