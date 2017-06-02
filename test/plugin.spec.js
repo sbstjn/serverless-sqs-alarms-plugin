@@ -34,6 +34,55 @@ it('creates CloudFormation configuration', () => {
   expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Threshold', 3)
 })
 
+describe('alarm name', () => {
+  let config
+
+  beforeEach(() => {
+    config = {
+      service: {
+        custom: {
+          'sqs-alarms': [
+            { queue: 'test-queue',
+              topic: 'test-topic',
+              thresholds: [1, 2, 3]
+            }
+          ]
+        },
+        provider: {
+          region: 'test-region',
+          compiledCloudFormationTemplate: {
+            Resources: {}
+          }
+        }
+      }
+    }
+  });
+
+  describe('is given', () => {
+    it('adds alarm name to CloudFormation configuration', () => {
+      config.service.custom['sqs-alarms'][0].name = 'alarm'
+
+      const test = new Plugin(config);
+      test.beforeDeployResources()
+
+      const data = config.service.provider.compiledCloudFormationTemplate.Resources
+
+      expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.AlarmName', 'alarm-test-queue-3')
+    })
+  })
+
+  describe('is not given', () => {
+    it('adds no alarm name to CloudFormation configuration', () => {
+      const test = new Plugin(config);
+      test.beforeDeployResources()
+
+      const data = config.service.provider.compiledCloudFormationTemplate.Resources
+
+      expect(data).not.toHaveProperty('testqueueMessageAlarm3.Properties.AlarmName')
+    })
+  })
+})
+
 it('creates alarms for multiple queues', () => {
     let config = {
         service: {

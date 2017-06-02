@@ -9,6 +9,7 @@ class Alarm {
     this.topic = alarm.topic
     this.region = region
     this.thresholds = alarm.thresholds
+    this.name = alarm.name
   }
 
   formatAlarmName(value) {
@@ -19,33 +20,40 @@ class Alarm {
 
   ressources () {
     return this.thresholds.map(
-      value => ({
-        [this.formatAlarmName(value)]: {
-          Type: 'AWS::CloudWatch::Alarm',
-          Properties: {
-            AlarmDescription: util.format('Alarm if queue contains more than %s messages', value),
-            Namespace: 'AWS/SQS',
-            MetricName: 'ApproximateNumberOfMessagesVisible',
-            Dimensions: [
-              {
-                Name: 'QueueName',
-                Value: this.queue
-              }
-            ],
-            Statistic: 'Sum',
-            Period: 60,
-            EvaluationPeriods: 1,
-            Threshold: value,
-            ComparisonOperator: 'GreaterThanOrEqualToThreshold',
-            AlarmActions: [
-              { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
-            ],
-            OKActions: [
-              { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
-            ]
+      value => {
+        const config = {
+          [this.formatAlarmName(value)]: {
+            Type: 'AWS::CloudWatch::Alarm',
+            Properties: {
+              AlarmDescription: util.format('Alarm if queue contains more than %s messages', value),
+              Namespace: 'AWS/SQS',
+              MetricName: 'ApproximateNumberOfMessagesVisible',
+              Dimensions: [
+                {
+                  Name: 'QueueName',
+                  Value: this.queue
+                }
+              ],
+              Statistic: 'Sum',
+              Period: 60,
+              EvaluationPeriods: 1,
+              Threshold: value,
+              ComparisonOperator: 'GreaterThanOrEqualToThreshold',
+              AlarmActions: [
+                { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
+              ],
+              OKActions: [
+                { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
+              ]
+            }
           }
         }
-      })
+
+        if (this.name) {
+          config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.name, this.queue, value)
+        }
+        return config
+      }
     )
   }
 }
