@@ -35,6 +35,7 @@ custom:
   sqs-alarms:
     - queue: your-sqs-queue-name
       topic: your-sns-topic-name
+      alarmName: your-alarm-name # optional parameter
       thresholds:
         - 1
         - 50
