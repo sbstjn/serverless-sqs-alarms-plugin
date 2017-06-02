@@ -60,7 +60,7 @@ describe('alarm name', () => {
 
   describe('is given', () => {
     it('adds alarm name to CloudFormation configuration', () => {
-      config.service.custom['sqs-alarms'][0].alarmName = 'alarm'
+      config.service.custom['sqs-alarms'][0].name = 'alarm'
 
       const test = new Plugin(config);
       test.beforeDeployResources()

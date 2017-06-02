@@ -9,7 +9,7 @@ class Alarm {
     this.topic = alarm.topic
     this.region = region
     this.thresholds = alarm.thresholds
-    this.alarmName = alarm.alarmName
+    this.name = alarm.name
   }
 
   formatAlarmName(value) {
@@ -49,8 +49,8 @@ class Alarm {
           }
         }
 
-        if (this.alarmName) {
-          config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.alarmName, this.queue, value)
+        if (this.name) {
+          config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.name, this.queue, value)
         }
         return config
       }
