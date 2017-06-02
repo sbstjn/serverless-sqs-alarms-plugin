@@ -7,7 +7,7 @@
 
 ## About the plugin
 
-This serverless plugin is a wrapper to configure CloudWatch Alarms to monitor the visible messages in an SQS queue. You need to provide the SQS *queue name* and SNS *topic* which will receive the `Alarm` and `OK` messages. 
+This serverless plugin is a wrapper to configure CloudWatch Alarms to monitor the visible messages in an SQS queue. You need to provide the SQS *queue name* and SNS *topic* which will receive the `Alarm` and `OK` messages.
 
 ## Usage
 
@@ -18,7 +18,7 @@ Add the npm package to your project:
 $ yarn add serverless-sqs-alarms-plugin
 
 # Via npm
-$ npm instal serverless-sqs-alarms-plugin --save
+$ npm install serverless-sqs-alarms-plugin --save
 ```
 
 Add the plugin to your `serverless.yml`:
