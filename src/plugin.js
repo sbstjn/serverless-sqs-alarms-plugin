@@ -10,17 +10,33 @@ class Alarm {
     this.region = region
     this.thresholds = alarm.thresholds
     this.name = alarm.name
+    this.treatMissingData = alarm.treatMissingData
   }
 
-  formatAlarmName(value) {
+  formatAlarmName (value) {
     // Cloud Watch alarms must be alphanumeric only
     let queue = this.queue.replace(/[^0-9a-z]/gi, '')
     return util.format(queue + 'MessageAlarm%s', value)
   }
 
+  resolveTreatMissingData (index) {
+    if (this.treatMissingData.constructor === Array) {
+      return this.validateTreatMissingData(this.treatMissingData[index])
+    } else {
+      return this.validateTreatMissingData(this.treatMissingData)
+    }
+  }
+
+  validateTreatMissingData (treatment) {
+    let validTreamtments = ['missing', 'ignore', 'breaching', 'notBreaching']
+    if (validTreamtments.includes(treatment)) {
+      return treatment
+    }
+  }
+
   ressources () {
     return this.thresholds.map(
-      value => {
+      (value, i) => {
         const config = {
           [this.formatAlarmName(value)]: {
             Type: 'AWS::CloudWatch::Alarm',
@@ -51,6 +67,13 @@ class Alarm {
 
         if (this.name) {
           config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.name, this.queue, value)
+        }
+
+        if (this.treatMissingData) {
+          let treatMissing = this.resolveTreatMissingData(i)
+          if (treatMissing) {
+            config[this.formatAlarmName(value)].Properties.TreatMissingData = treatMissing
+          }
         }
         return config
       }
