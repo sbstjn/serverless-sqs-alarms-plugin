@@ -6,10 +6,10 @@
   "author": "Sebastian Müller <mail@sbstjn.com>",
   "license": "MIT",
   "scripts": {
-    "test": "$(yarn bin)/jest test",
-    "test:cover": "$(npm bin)/jest test --coverage",
-    "coveralls": "cat ./coverage/lcov.info | $(npm bin)/coveralls",
-    "lint": "$(yarn bin)/standard | $(yarn bin)/snazzy"
+    "test": "jest test",
+    "test:cover": "jest test --coverage",
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "lint": "standard | snazzy"
   },
   "repository": {
     "type": "git",
