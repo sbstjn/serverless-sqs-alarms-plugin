@@ -41,7 +41,10 @@ custom:
         - 50
         - 100
         - 500
+      treatMissingData: string | array[] # optional parameter
 ```
+
+> `treatMissingData` can be a string which is applied to all alarms, or an array to set alarms individually. Valid types are `ignore, missing, breaching, notBreaching` [more details](http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html#alarms-and-missing-data)
 
 That's it! With this example your SNS topic will receive a message when there are more than 1, 50, 100, and 500 visible in SQS.
 
