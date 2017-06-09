@@ -7,6 +7,8 @@ dependencies:
     - yarn
 
 test:
+  pre:
+    - yarn lint
   override:
     - yarn test:cover
   post:
