@@ -95,7 +95,7 @@ class Plugin {
     }
 
     const alarms = this.serverless.service.custom['sqs-alarms'].map(
-      data => new Alarm(data, this.serverless.service.provider.region)
+      data => new Alarm(data, this.serverless.getProvider('aws').getRegion())
     )
 
     alarms.forEach(
