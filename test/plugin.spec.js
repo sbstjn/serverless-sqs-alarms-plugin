@@ -4,6 +4,7 @@ const Plugin = require('../')
 
 it('creates CloudFormation configuration', () => {
   let config = {
+    getProvider: () => ({ getRegion: () => 'test-region' }),
     service: {
       custom: {
         'sqs-alarms': [
@@ -14,7 +15,6 @@ it('creates CloudFormation configuration', () => {
         ]
       },
       provider: {
-        region: 'test-region',
         compiledCloudFormationTemplate: {
           Resources: {}
         }
@@ -39,6 +39,7 @@ describe('alarm name', () => {
 
   beforeEach(() => {
     config = {
+      getProvider: () => ({ getRegion: () => 'test-region' }),
       service: {
         custom: {
           'sqs-alarms': [
@@ -49,7 +50,6 @@ describe('alarm name', () => {
           ]
         },
         provider: {
-          region: 'test-region',
           compiledCloudFormationTemplate: {
             Resources: {}
           }
@@ -85,6 +85,7 @@ describe('alarm name', () => {
 
 it('creates alarms for multiple queues', () => {
   let config = {
+    getProvider: () => ({ getRegion: () => 'test-region' }),
     service: {
       custom: {
         'sqs-alarms': [
@@ -101,7 +102,6 @@ it('creates alarms for multiple queues', () => {
         ]
       },
       provider: {
-        region: 'test-region',
         compiledCloudFormationTemplate: {
           Resources: {}
         }
@@ -122,6 +122,7 @@ it('creates alarms for multiple queues', () => {
 
 it('does not fail without configuration', () => {
   let config = {
+    getProvider: () => ({ getRegion: () => 'test-region' }),
     service: {
       custom: { },
       provider: {
@@ -145,6 +146,7 @@ describe('alarm treatMissingData', () => {
 
   beforeEach(() => {
     config = {
+      getProvider: () => ({ getRegion: () => 'test-region' }),
       service: {
         custom: {
           'sqs-alarms': [
@@ -155,7 +157,6 @@ describe('alarm treatMissingData', () => {
           ]
         },
         provider: {
-          region: 'test-region',
           compiledCloudFormationTemplate: {
             Resources: {}
           }
