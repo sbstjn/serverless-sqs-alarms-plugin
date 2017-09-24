@@ -85,7 +85,7 @@ class Plugin {
   constructor (serverless, options) {
     this.serverless = serverless
     this.hooks = {
-      'deploy:compileEvents': this.beforeDeployResources.bind(this)
+      'package:compileEvents': this.beforeDeployResources.bind(this)
     }
   }
 
