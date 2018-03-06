@@ -34,7 +34,7 @@ class Alarm {
     }
   }
 
-  ressources () {
+  resources () {
     return this.thresholds.map(
       (value, i) => {
         const config = {
@@ -99,11 +99,11 @@ class Plugin {
     )
 
     alarms.forEach(
-      alarm => alarm.ressources().forEach(
-        ressource => {
+      alarm => alarm.resources().forEach(
+        resource => {
           _.merge(
             this.serverless.service.provider.compiledCloudFormationTemplate.Resources,
-            ressource
+            resource
           )
         }
       )
