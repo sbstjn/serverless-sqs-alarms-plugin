@@ -36,7 +36,7 @@ class Alarm {
 
   resourceProperties (value) {
     if (value instanceof Object) {
-      return value;
+      return value
     }
 
     return {
@@ -47,7 +47,7 @@ class Alarm {
   ressources () {
     return this.thresholds.map(
       (props, i) => {
-        const properties = this.resourceProperties(props);
+        const properties = this.resourceProperties(props)
 
         const config = {
           [this.formatAlarmName(properties.value)]: {

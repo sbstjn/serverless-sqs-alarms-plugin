@@ -247,8 +247,6 @@ describe('alarm treatMissingData', () => {
   })
 })
 
-
-
 it('creates CloudFormation configuration with custom thresholds', () => {
   let config = {
     getProvider: () => ({ getRegion: () => 'test-region' }),
@@ -262,17 +260,17 @@ it('creates CloudFormation configuration with custom thresholds', () => {
               {
                 value: 1,
                 period: 5,
-                evaluationPeriods: 1,
-              }, 
+                evaluationPeriods: 1
+              },
               {
                 value: 2,
                 period: 5,
-                evaluationPeriods: 1,
+                evaluationPeriods: 1
               },
               {
                 value: 3,
                 period: 5,
-                evaluationPeriods: 1,
+                evaluationPeriods: 1
               }
             ]
           }
