@@ -54,7 +54,7 @@ class Alarm {
             Type: 'AWS::CloudWatch::Alarm',
             Properties: {
               AlarmDescription: util.format('Alarm if queue contains more than %s messages', properties.value),
-              Namespace: 'AWS/SQS',
+              Namespace: properties.namespace || 'AWS/SQS',
               MetricName: 'ApproximateNumberOfMessagesVisible',
               Dimensions: [
                 {

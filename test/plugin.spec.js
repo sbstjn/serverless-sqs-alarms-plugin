@@ -270,7 +270,8 @@ it('creates CloudFormation configuration with custom thresholds', () => {
               {
                 value: 3,
                 period: 5,
-                evaluationPeriods: 1
+                evaluationPeriods: 1,
+                namespace: 'test'
               }
             ]
           }
@@ -296,4 +297,5 @@ it('creates CloudFormation configuration with custom thresholds', () => {
   expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Threshold', 3)
   expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.EvaluationPeriods', 1)
   expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Period', 5)
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Namespace', 'test')
 })
