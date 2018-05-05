@@ -34,15 +34,27 @@ class Alarm {
     }
   }
 
+  resourceProperties (value) {
+    if (value instanceof Object) {
+      return value
+    }
+
+    return {
+      value
+    }
+  }
+
   ressources () {
     return this.thresholds.map(
-      (value, i) => {
+      (props, i) => {
+        const properties = this.resourceProperties(props)
+
         const config = {
-          [this.formatAlarmName(value)]: {
+          [this.formatAlarmName(properties.value)]: {
             Type: 'AWS::CloudWatch::Alarm',
             Properties: {
-              AlarmDescription: util.format('Alarm if queue contains more than %s messages', value),
-              Namespace: 'AWS/SQS',
+              AlarmDescription: util.format('Alarm if queue contains more than %s messages', properties.value),
+              Namespace: properties.namespace || 'AWS/SQS',
               MetricName: 'ApproximateNumberOfMessagesVisible',
               Dimensions: [
                 {
@@ -51,9 +63,9 @@ class Alarm {
                 }
               ],
               Statistic: 'Sum',
-              Period: 60,
-              EvaluationPeriods: 1,
-              Threshold: value,
+              Period: properties.period || 60,
+              EvaluationPeriods: properties.evaluationPeriods || 1,
+              Threshold: properties.value,
               ComparisonOperator: 'GreaterThanOrEqualToThreshold',
               AlarmActions: [
                 { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
@@ -66,13 +78,13 @@ class Alarm {
         }
 
         if (this.name) {
-          config[this.formatAlarmName(value)].Properties.AlarmName = util.format('%s-%s-%d', this.name, this.queue, value)
+          config[this.formatAlarmName(properties.value)].Properties.AlarmName = util.format('%s-%s-%d', this.name, this.queue, properties.value)
         }
 
         if (this.treatMissingData) {
           let treatMissing = this.resolveTreatMissingData(i)
           if (treatMissing) {
-            config[this.formatAlarmName(value)].Properties.TreatMissingData = treatMissing
+            config[this.formatAlarmName(properties.value)].Properties.TreatMissingData = treatMissing
           }
         }
         return config
