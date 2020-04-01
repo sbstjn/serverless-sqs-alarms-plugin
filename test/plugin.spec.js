@@ -299,3 +299,57 @@ it('creates CloudFormation configuration with custom thresholds', () => {
   expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Period', 5)
   expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Namespace', 'test')
 })
+
+it('creates CloudFormation configuration with custom thresholds', () => {
+  let config = {
+    getProvider: () => ({ getRegion: () => 'test-region' }),
+    service: {
+      custom: {
+        'sqs-alarms': [
+          {
+            queue: 'test-queue',
+            topic: 'test-topic',
+            description: 'test-description',
+            thresholds: [
+              {
+                value: 1,
+                period: 5,
+                evaluationPeriods: 1
+              },
+              {
+                value: 2,
+                period: 5,
+                evaluationPeriods: 1
+              },
+              {
+                value: 3,
+                period: 5,
+                evaluationPeriods: 1,
+                namespace: 'test'
+              }
+            ]
+          }
+        ]
+      },
+      provider: {
+        compiledCloudFormationTemplate: {
+          Resources: {}
+        }
+      }
+    }
+  }
+
+  const test = new Plugin(config)
+  test.beforeDeployResources()
+
+  const data = config.service.provider.compiledCloudFormationTemplate.Resources
+
+  expect(data).toHaveProperty('testqueueMessageAlarm3')
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Type', 'AWS::CloudWatch::Alarm')
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties')
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.AlarmDescription', 'test-description')
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Threshold', 3)
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.EvaluationPeriods', 1)
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Period', 5)
+  expect(data).toHaveProperty('testqueueMessageAlarm3.Properties.Namespace', 'test')
+})

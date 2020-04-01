@@ -6,6 +6,7 @@ const util = require('util')
 class Alarm {
   constructor (alarm, region) {
     this.queue = alarm.queue
+    this.description = alarm.description
     this.topic = alarm.topic
     this.region = region
     this.thresholds = alarm.thresholds
@@ -48,12 +49,14 @@ class Alarm {
     return this.thresholds.map(
       (props, i) => {
         const properties = this.resourceProperties(props)
+        const defaultDescription = util.format("Alarm if queue contains more than %s messages", properties.value )
+        const description = this.description ? this.description : defaultDescription
 
         const config = {
           [this.formatAlarmName(properties.value)]: {
             Type: 'AWS::CloudWatch::Alarm',
             Properties: {
-              AlarmDescription: util.format('Alarm if queue contains more than %s messages', properties.value),
+              AlarmDescription: description,
               Namespace: properties.namespace || 'AWS/SQS',
               MetricName: 'ApproximateNumberOfMessagesVisible',
               Dimensions: [
