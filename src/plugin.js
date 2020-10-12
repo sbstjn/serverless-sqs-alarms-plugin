@@ -68,10 +68,10 @@ class Alarm {
               Threshold: properties.value,
               ComparisonOperator: 'GreaterThanOrEqualToThreshold',
               AlarmActions: [
-                { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
+                { 'Fn::Join': [ '', [ 'arn:', { 'Ref': 'AWS::Partition' }, ':sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
               ],
               OKActions: [
-                { 'Fn::Join': [ '', [ 'arn:aws:sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
+                { 'Fn::Join': [ '', [ 'arn:', { 'Ref': 'AWS::Partition' }, ':sns:' + this.region + ':', { 'Ref': 'AWS::AccountId' }, ':' + this.topic ] ] }
               ]
             }
           }
